@@ -61,3 +61,21 @@ resource "aws_route_table_association" "public" {
   subnet_id      = each.value.id
   route_table_id = aws_route_table.public.id
 }
+
+resource "aws_route_table" "private_app" {
+  for_each = aws_subnet.private_app
+  vpc_id   = aws_vpc.this.id
+}
+
+resource "aws_route" "private_app" {
+  for_each = aws_subnet.private_app
+  route_table_id         = aws_route_table.private_app[each.key].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.this[each.key].id
+}
+
+resource "aws_route_table_association" "private_app" {
+  for_each = aws_subnet.private_app
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.private_app[each.key].id
+}
