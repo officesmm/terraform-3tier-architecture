@@ -17,22 +17,29 @@ resource "aws_launch_template" "app" {
 #!/bin/bash
 set -eux
 
+# ---------- System ----------
 dnf -y update
-dnf -y install git nodejs npm unzip
+dnf -y install nodejs npm unzip awscli
 
-# PM2
+# ---------- PM2 ----------
 npm install -g pm2
 
-# App directory
-mkdir -p /var/www/app
-chown ec2-user:ec2-user /var/www/app
+# ---------- App directory ----------
+APP_DIR="/var/www/app"
+mkdir -p $APP_DIR
+chown ec2-user:ec2-user $APP_DIR
 
-#!/bin/bash
-#dnf -y install nginx
-#sed -i "s/80/${var.app_port}/g" /etc/nginx/nginx.conf
-#systemctl enable nginx && systemctl start nginx
+# ---------- Deploy app ----------
+cd $APP_DIR
+aws s3 cp s3://smm-sandbox-3tier-architecture/app.zip app.zip
+unzip -o app.zip
+npm install --production
+
+# ---------- Start app ----------
+pm2 start app.js --name app
+pm2 save
 EOF
-)
+  )
 }
 
 resource "aws_autoscaling_group" "app" {
