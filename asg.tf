@@ -9,8 +9,8 @@ data "aws_ami" "al2023" {
 }
 
 resource "aws_launch_template" "app" {
-  image_id      = data.aws_ami.al2023.id
-  instance_type = var.instance_type
+  image_id               = data.aws_ami.al2023.id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.app.id]
 
   iam_instance_profile {
@@ -52,7 +52,7 @@ resource "aws_autoscaling_group" "app" {
   desired_capacity = 2
 
   vpc_zone_identifier = values(aws_subnet.private_app)[*].id
-  target_group_arns  = [aws_lb_target_group.app.arn]
+  target_group_arns   = [aws_lb_target_group.app.arn]
 
   launch_template {
     id      = aws_launch_template.app.id

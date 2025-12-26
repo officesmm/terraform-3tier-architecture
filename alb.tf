@@ -8,7 +8,7 @@ resource "aws_lb" "this" {
 resource "aws_lb_target_group" "app" {
   port     = var.app_port
   protocol = "HTTP"
-  vpc_id  = aws_vpc.this.id
+  vpc_id   = aws_vpc.this.id
 }
 
 resource "aws_lb_listener" "http" {
