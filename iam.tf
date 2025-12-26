@@ -25,6 +25,11 @@ resource "aws_iam_instance_profile" "ssm" {
   role = aws_iam_role.ssm.name
 }
 
+resource "aws_iam_role_policy_attachment" "s3_readonly" {
+  role       = aws_iam_role.ssm.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
 resource "aws_iam_role_policy" "ec2_s3_read" {
   role = aws_iam_role.ssm.name
 
