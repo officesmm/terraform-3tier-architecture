@@ -48,7 +48,7 @@ EOF
 
 resource "aws_autoscaling_group" "app" {
   min_size         = 1
-  max_size         = 4
+  max_size         = 8
   desired_capacity = 2
 
   vpc_zone_identifier = values(aws_subnet.private_app)[*].id
