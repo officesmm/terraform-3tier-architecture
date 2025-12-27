@@ -35,5 +35,15 @@ variable "db_password" {
   sensitive = true
 }
 
+variable "cf_domain_name" {
+  default = "dev-admin.mmcloudbet.com"
+}
+
+variable "hosted_zone_name" {
+  default = "mmcloudbet.com"
+}
+
+variable "cf_acm_certificate_arn" {}
+
 
 
