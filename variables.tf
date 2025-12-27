@@ -1,10 +1,11 @@
 variable "region" { default = "ap-northeast-1" }
 variable "name" { default = "mix-three-tier" }
+variable "asg_name" { default = "mix-three-tier-asg" }
 
 variable "vpc_cidr" { default = "10.0.0.0/16" }
 
 variable "azs" {
-  default = ["ap-northeast-1a", "ap-northeast-1b", "ap-northeast-1c"]
+  default = ["ap-northeast-1a", "ap-northeast-1d", "ap-northeast-1c"]
 }
 
 variable "public_subnet_cidrs" {

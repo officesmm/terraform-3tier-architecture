@@ -51,6 +51,8 @@ EOF
 }
 
 resource "aws_autoscaling_group" "app" {
+  name = var.asg_name
+  
   min_size         = 1
   max_size         = 8
   desired_capacity = 2
@@ -63,3 +65,4 @@ resource "aws_autoscaling_group" "app" {
     version = "$Latest"
   }
 }
+
