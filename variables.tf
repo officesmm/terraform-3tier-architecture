@@ -20,11 +20,13 @@ variable "private_db_subnet_cidrs" {
 }
 
 variable "app_port" { default = 8080 }
+# m6g.large
 variable "instance_type" { default = "t3.micro" }
 
 variable "s3_bucket_arn" { default = "arn:aws:s3:::smm-sandbox-3tier-architecture" }
 
 variable "db_engine" { default = "mysql" }
+# db.m6g.large
 variable "db_instance_class" { default = "db.t4g.micro" }
 
 variable "db_username" { default = "mixuser" }
