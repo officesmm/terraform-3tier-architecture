@@ -27,7 +27,7 @@ variable "s3_bucket_arn" { default = "arn:aws:s3:::smm-sandbox-3tier-architectur
 variable "db_engine" { default = "mysql" }
 variable "db_instance_class" { default = "db.t4g.micro" }
 
-variable "db_username" { default = "appuser" }
+variable "db_username" { default = "mixuser" }
 variable "db_password" {
   sensitive = true
 }

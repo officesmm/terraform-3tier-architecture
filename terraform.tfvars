@@ -1,1 +1,1 @@
-db_password = "StrongPassword123!"
+db_password = "mixStrongPassword123!"
