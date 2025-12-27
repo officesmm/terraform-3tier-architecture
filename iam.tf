@@ -41,14 +41,14 @@ resource "aws_iam_role_policy" "ec2_s3_read" {
         Action = [
           "s3:ListBucket"
         ]
-        Resource = "arn:aws:s3:::smm-sandbox-3tier-architecture"
+        Resource = var.s3_bucket_arn
       },
       {
         Effect = "Allow"
         Action = [
           "s3:GetObject"
         ]
-        Resource = "arn:aws:s3:::smm-sandbox-3tier-architecture/*"
+        Resource = "${var.s3_bucket_arn}/*"
       }
     ]
   })

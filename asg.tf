@@ -8,6 +8,10 @@ data "aws_ami" "al2023" {
   }
 }
 
+locals {
+  s3_bucket_name = replace(var.s3_bucket_arn, "arn:aws:s3:::", "")
+}
+
 resource "aws_launch_template" "app" {
   image_id               = data.aws_ami.al2023.id
   instance_type          = var.instance_type
@@ -35,7 +39,7 @@ chown ec2-user:ec2-user $APP_DIR
 
 # ---------- Deploy app ----------
 cd $APP_DIR
-aws s3 cp s3://smm-sandbox-3tier-architecture/app.zip app.zip
+aws s3 cp s3://${local.s3_bucket_name}/app.zip app.zip
 unzip -o app.zip
 npm install --production
 

@@ -3,8 +3,8 @@ resource "aws_db_subnet_group" "db" {
 }
 
 resource "aws_db_instance" "this" {
-  engine                 = "mysql"
-  instance_class         = "db.t4g.micro"
+  engine                 = var.db_engine
+  instance_class         = var.db_instance_class
   allocated_storage      = 20
   username               = var.db_username
   password               = var.db_password
@@ -13,3 +13,4 @@ resource "aws_db_instance" "this" {
   publicly_accessible    = false
   skip_final_snapshot    = true
 }
+
