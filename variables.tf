@@ -24,7 +24,7 @@ variable "app_port" { default = 8080 }
 # m6g.large or t3.micro
 variable "instance_type" { default = "m6g.large" }
 
-variable "s3_bucket_arn" { default = "arn:aws:s3:::smm-sandbox-3tier-architecture" }
+variable "s3_bucket_arn" { default = "arn:aws:s3:::mix-dev-3tier-architecture" }
 
 variable "db_engine" { default = "mysql" }
 # db.m6g.large or db.t4g.micro
