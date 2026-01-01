@@ -1,8 +1,9 @@
-name: Deploy Node App
+name: Build & Upload app.zip + ASG Refresh
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - master
 
 jobs:
   deploy:
@@ -10,32 +11,35 @@ jobs:
     environment: deploy
 
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install deps
-        run: npm ci
-
-      - name: Build
-        run: npm run build || echo "no build step"
-
-      - name: Zip app
+      - name: Create app.zip
         run: |
           zip -r app.zip . \
+            -x "node_modules/*" \
             -x ".git/*" \
-            -x "node_modules/*"
+            -x ".github/*" \
+            -x ".gitignore" \
+            -x "*.log"
 
-      - name: Upload to S3
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
+      - name: Upload app.zip to S3
+        run: |
+          aws s3 cp app.zip s3://${{ secrets.AWS_S3_BUCKET }}/app.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-1
 
-      - run: |
-          aws s3 cp app.zip s3://three-tier-deploy-artifacts/app.zip
+      - name: Trigger ASG Instance Refresh
+        run: |
+          aws autoscaling start-instance-refresh \
+            --auto-scaling-group-name mix-three-tier-asg \
+            --preferences '{
+              "MinHealthyPercentage": 90,
+              "InstanceWarmup": 120
+            }'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ap-northeast-1
