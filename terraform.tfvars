@@ -1,1 +1,1 @@
-db_password = "mixStrongPassword123!"
+db_password = "cloudbetStrongPassword123!"

@@ -21,16 +21,16 @@ variable "private_db_subnet_cidrs" {
 }
 
 variable "app_port" { default = 8080 }
-# m6g.large
-variable "instance_type" { default = "t3.micro" }
+# m6g.large or t3.micro
+variable "instance_type" { default = "m6g.large" }
 
 variable "s3_bucket_arn" { default = "arn:aws:s3:::smm-sandbox-3tier-architecture" }
 
 variable "db_engine" { default = "mysql" }
-# db.m6g.large
-variable "db_instance_class" { default = "db.t4g.micro" }
+# db.m6g.large or db.t4g.micro
+variable "db_instance_class" { default = "db.m6g.large" }
 
-variable "db_username" { default = "mixuser" }
+variable "db_username" { default = "cloudbetuser" }
 variable "db_password" {
   sensitive = true
 }
