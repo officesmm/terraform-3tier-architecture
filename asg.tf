@@ -54,7 +54,7 @@ resource "aws_autoscaling_group" "app" {
   name = var.asg_name
   
   min_size         = 1
-  max_size         = 8
+  max_size         = 10
   desired_capacity = 2
 
   vpc_zone_identifier = values(aws_subnet.private_app)[*].id
