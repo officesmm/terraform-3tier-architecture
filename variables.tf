@@ -30,6 +30,11 @@ variable "db_engine" { default = "mysql" }
 # db.m6g.large or db.t4g.micro
 variable "db_instance_class" { default = "db.m6g.large" }
 
+variable "redis_node_type" {
+  # cache.t4g.micro or cache.m6g.large
+  default = "cache.t4g.micro"
+}
+
 variable "db_username" { default = "cloudbetuser" }
 variable "db_password" {
   sensitive = true

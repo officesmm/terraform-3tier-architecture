@@ -13,3 +13,11 @@ output "cloudfront_domain" {
 output "cloudfront_alias" {
   value = var.cf_domain_name
 }
+
+output "redis_endpoint" {
+  value = aws_elasticache_replication_group.redis.primary_endpoint_address
+}
+
+output "redis_port" {
+  value = aws_elasticache_replication_group.redis.port
+}
