@@ -44,18 +44,18 @@ unzip -o app.zip
 npm install --production
 
 # ---------- App config ----------
-REDIS_HOST="${aws_elasticache_replication_group.redis.primary_endpoint_address}"
-REDIS_PORT="6379"
-REDIS_URL="redis://$REDIS_HOST:$REDIS_PORT"
-
-cat <<ENV > $APP_DIR/.env
-REDIS_HOST=$REDIS_HOST
-REDIS_PORT=$REDIS_PORT
-REDIS_URL=$REDIS_URL
-ENV
-
-export REDIS_HOST REDIS_PORT REDIS_URL
-
+# REDIS_HOST="${aws_elasticache_replication_group.redis.primary_endpoint_address}"
+# REDIS_PORT="6379"
+# REDIS_URL="redis://$REDIS_HOST:$REDIS_PORT"
+#
+# cat <<ENV > $APP_DIR/.env
+# REDIS_HOST=$REDIS_HOST
+# REDIS_PORT=$REDIS_PORT
+# REDIS_URL=$REDIS_URL
+# ENV
+#
+# export REDIS_HOST REDIS_PORT REDIS_URL
+#
 # ---------- Start app ----------
 pm2 start app.js --name app
 pm2 save

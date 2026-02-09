@@ -11,7 +11,7 @@ output "cloudfront_domain" {
 }
 
 output "cloudfront_alias" {
-  value = var.cf_domain_name
+  value = local.cf_domain_names
 }
 
 output "redis_endpoint" {

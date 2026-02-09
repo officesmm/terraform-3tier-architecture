@@ -11,9 +11,13 @@ data "aws_cloudfront_origin_request_policy" "all_viewer" {
   name = "Managed-AllViewer"
 }
 
+locals {
+  cf_domain_names = length(var.cf_domain_names) > 0 ? var.cf_domain_names : [var.cf_domain_name]
+}
+
 resource "aws_cloudfront_distribution" "this" {
   enabled = true
-  aliases = [var.cf_domain_name]
+  aliases = local.cf_domain_names
 
   origin {
     domain_name = aws_lb.this.dns_name
@@ -52,8 +56,10 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 resource "aws_route53_record" "cf_alias" {
+  for_each = toset(local.cf_domain_names)
+  allow_overwrite = true
   zone_id = data.aws_route53_zone.primary.zone_id
-  name    = var.cf_domain_name
+  name    = each.value
   type    = "A"
 
   alias {

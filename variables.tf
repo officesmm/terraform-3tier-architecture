@@ -44,6 +44,11 @@ variable "cf_domain_name" {
   default = "dev-admin.mmcloudbet.com"
 }
 
+variable "cf_domain_names" {
+  type    = list(string)
+  default = []
+}
+
 variable "hosted_zone_name" {
   default = "mmcloudbet.com"
 }
